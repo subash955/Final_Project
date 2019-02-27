@@ -8,7 +8,7 @@ class Square:
         self.piece = 0
 
     def setpiece (self, piece):
-    	self.piece = piece
+        self.piece = piece
     
     def __str__(self):
         return (str(files[self.file]) + str(self.rank))
@@ -35,14 +35,49 @@ class piece:
     def move (self, new_pos):
         self.position.setpiece(0)
         self.position = new_pos
-        self.position.setpiece(self)	
+        self.position.setpiece(self)    
         
 class pawn (piece):
     
     def capture (self, new_pos):
         if new_pos.rank == self.position.rank + 1 and abs(new_pos.file - self.position.file) == 1 and new_pos.piece != 0:
+            if new_pos.piece.color != self.color:
+                new_pos.piece.is_captured()
+                self.move(new_pos)
+        else:
+            print ("Error")
+    def pawn_move (self):
+        if self.position.rank < 7 and Board[self.position.file-1][self.position.rank].piece == 0:
+            self.move(Board[self.position.file-1][self.position.rank])
+        elif self.position.rank == 7 and Board[self.position.file-1][7] == 0:
+            self.promote()
+        else:
+            print(error)
+        
+    
+    def promote():
+        pass
+
+class Knight (piece):
+    def capture (self, new_pos):
+        if new_pos.piece != 0:
             new_pos.piece.is_captured()
             self.move(new_pos)
         else:
             print ("Error")
-        
+    def Check_Knight_Move (self, new_pos):
+        valid_moves = [(1,2), (2,1), (-1,2),(1,-2), (-1,-2), (-2,-1), (2,-1), (-2,1)]
+        for (x,y) in valid_moves:
+            if self.position.rank + x == new_pos.rank and self.position.file + y == new_pos.file:
+                return True
+        return False
+    
+    def move_knight(self, new_pos):
+        if self.Check_Knight_Move(new_pos):
+            if new_pos.piece!= 0:
+                if new_pos.piece.color != self.color:
+                    self.capture (new_pos)
+            else:
+                self.move(new_pos)
+        else:
+            print ("Error")
