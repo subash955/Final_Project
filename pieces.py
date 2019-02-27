@@ -41,7 +41,7 @@ class pawn (piece):
     
     def capture (self, new_pos):
         if new_pos.rank == self.position.rank + 1 and abs(new_pos.file - self.position.file) == 1 and new_pos.piece != 0:
-            new_pos.piece.is_captured
+            new_pos.piece.is_captured()
             self.move(new_pos)
         else:
             print ("Error")
