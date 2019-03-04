@@ -37,6 +37,13 @@ class piece:
         self.position = new_pos
         self.position.setpiece(self)    
         
+    def capture (self, new_pos):
+        if new_pos.piece != 0:
+            new_pos.piece.is_captured()
+            self.move(new_pos)
+        else:
+            print ("Error")
+            
 class pawn (piece):
     
     def capture (self, new_pos):
@@ -59,12 +66,7 @@ class pawn (piece):
         pass
 
 class Knight (piece):
-    def capture (self, new_pos):
-        if new_pos.piece != 0:
-            new_pos.piece.is_captured()
-            self.move(new_pos)
-        else:
-            print ("Error")
+    
     def Check_Knight_Move (self, new_pos):
         valid_moves = [(1,2), (2,1), (-1,2),(1,-2), (-1,-2), (-2,-1), (2,-1), (-2,1)]
         for (x,y) in valid_moves:
@@ -81,3 +83,49 @@ class Knight (piece):
                 self.move(new_pos)
         else:
             print ("Error")
+
+class Bishop (piece):
+    def check_bishop_move (self, new_pos):
+        dx = new_pos.file - self.position.file
+        dy = new_pos.rank - self.position.rank
+        
+        if abs(dx) != abs (dy):
+            return False
+        
+        if new_pos.piece != 0:
+                if new_pos.piece.color == self.color:
+                    return False
+        if dx > 0 and dy > 0:
+            for x in range (dx), y in range (dy):
+                if Board[self.position.file+x][self.position.rank+y].piece != 0:
+                    print("Error")
+                    return False
+            return True
+        if dx < 0 and dy > 0:
+            for x in range (-dx), y in range (dy):
+                if Board[self.position.file-x][self.position.rank+y].piece != 0:
+                    print("Error")
+                    return False
+            return True
+        if dx > 0 and dy < 0:
+            for x in range (dx), y in range (-dy):
+                if Board[self.position.file+x][self.position.rank-y].piece != 0:
+                    print("Error")
+                    return False
+            return True
+        if dx < 0 and dy < 0:
+            for x in range (-dx), y in range (-dy):
+                if Board[self.position.file-x][self.position.rank-y].piece != 0:
+                    print("Error")
+                    return False
+            return True
+        
+    def move_bishop (self, new_pos):
+        if check_bishop_move(self,new_pos):
+            if new_pos.piece == 0:
+                self.move(new_pos)
+            else:
+                self.capture(new_pos)
+        else:
+            print ("Error")
+            
