@@ -168,3 +168,19 @@ class Rook (piece):
                 self.capture(new_pos)
         else:
             print ("Error")
+            
+class Queen (piece, rook, bishop):
+    def check_queen_move (self, new_pos):
+        if check_rook_move(self, new_pos) or check_bishop_move(self,new_pos):
+            return True
+        else:
+            return False
+        
+    def move_queen (self, new_pos):
+        if check_queen_move(self,new_pos):
+            if new_pos.piece == 0:
+                self.move(new_pos)
+            else:
+                self.capture(new_pos)
+        else:
+            print ("Error") 
