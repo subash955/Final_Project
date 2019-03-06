@@ -253,3 +253,24 @@ class King (Queen):
                 if new_pos.piece.color != self.color:
                     return True
         return False
+        
+def arrange ():
+    for x in range (7):
+        Board[x][1].setpiece (pawn('w',x+1,2))
+        Board[x][6].setpiece (pawn('b',x+1,2))
+    Board[0][0].setpiece(Rook('w', 1,1))
+    Board[7][0].setpiece(Rook('w', 8,1))
+    Board[7][7].setpiece(Rook('b', 8,8))
+    Board[0][7].setpiece(Rook('b', 1,8))
+    Board[1][0].setpiece(Knight('w',2,1))
+    Board[6][0].setpiece(Knight('w',7,1))
+    Board[1][7].setpiece(Knight('b',2,8))
+    Board[6][7].setpiece(Knight('w',7,8))
+    Board[2][0].setpiece(Bishop('w',3,1))
+    Board[5][0].setpiece(Bishop('w',6,1))
+    Board[2][7].setpiece(Bishop('b',3,8))
+    Board[5][7].setpiece(Bishop('b',6,8))
+    Board[3][0].setpiece(Queen('w',4,1))
+    Board[3][8].setpiece(Queen('b',4,8))
+    Board[4][0].setpiece(King('w',5,1))
+    Board[4][8].setpiece(King('b',5,8))
