@@ -2,6 +2,17 @@
 
 This is a program that allows the user to play chess against a human opponent on the same computer. The game contains all of the basic functionalities of chess such as checkmates, checks and captures. It automatically ends when the conditions have been met. 
 
+## Inspiration
+
+As a chess player myself, I was interested in delevoping my own form of the game, trying to write algorithms to find legal moves and other such things. 
+
+## Features
+
+- Visual interface
+- Allows for two players
+- Supports pawn promotion
+- Does not allow illegal moves
+
 ## Installation
 
 Download the zip file and run the file pieces.py, the game should start then. After each game, the program must be re-run in order to reset the arrangement of the board. 
@@ -50,8 +61,11 @@ Board = [[x for x in ranks] for y in ranks]
         for y in range (8):
             Board[x][y] = Square(x+1,y+1)
 ```
+Note: Castling was a feature tested in the castle branch. 
 
-## Possible Implementation of a GUI
+## Known Issues:
+
+The game requires valid input from the user (Numbers only), any other form of input terminates the program. Also pawn promotion automatically selects a queen, as, in 99% of cases, a queen is the preferred piece so it did not seem necessary to add a selection.
 
 
 ## Authors
