@@ -6,19 +6,19 @@ class Square:
         self.rank = rank
         self.file = file
         self.piece = 0
-
+    
     def setpiece (self, piece):
         self.piece = piece
-        
+    
     def getpiece (self):
         if self.piece == 0:
             return '  '
         else:
             return self.piece
-        
-    def __str__(self):
-        return (str(files[self.file]) + str(self.rank))
-    
+
+def __str__(self):
+    return (str(files[self.file]) + str(self.rank))
+
 Board = [[x for x in ranks] for y in ranks]
 for x in range (8):
     for y in range (8):
@@ -33,29 +33,29 @@ class piece:
         self.color = color
         self.position = Board[file-1][rank-1]
         Board[file-1][rank-1].piece = self
-        
-
+    
+    
     def is_captured (self):
         self.position = 0
-
+    
     def move (self, new_pos):
         self.position.setpiece(0)
         self.position = new_pos
-        self.position.setpiece(self)    
-        
+        self.position.setpiece(self)
+    
     def capture (self, new_pos):
         if new_pos.piece != 0:
             new_pos.piece.is_captured()
             self.move(new_pos)
         else:
             print ("Error")
-            
-    def __str__(self):
-        if self.color == 'w':
-            return (self.w_name)
+
+def __str__(self):
+    if self.color == 'w':
+        return (self.w_name)
         else:
             return (self.b_name)
-              
+
 class pawn (piece):
     w_name = '♙'
     b_name = '♟'
@@ -74,8 +74,8 @@ class pawn (piece):
     
     def capture (self, new_pos):
         if self.check_capture(new_pos):
-                new_pos.piece.is_captured()
-                self.move(new_pos)
+            new_pos.piece.is_captured()
+            self.move(new_pos)
         else:
             print ("Error")
     
@@ -85,11 +85,11 @@ class pawn (piece):
             if self.position.rank == 2 and new_pos.file == self.position.file and new_pos.rank -2 == self.position.rank and new_pos.piece == 0 and Board[self.position.file-1][self.position.rank].piece == 0:
                 return True
             if new_pos.file  != self.position.file or new_pos.rank - 1 != self.position.rank:
-                    return False
+                return False
             if  Board[self.position.file-1][self.position.rank].piece != 0:
                 return False
             return True
-        else: 
+        else:
             if self.position.rank == 7 and new_pos.file == self.position.file and new_pos.rank +2 == self.position.rank:
                 return True
             if new_pos.file  != self.position.file or new_pos.rank + 1 != self.position.rank:
@@ -97,8 +97,8 @@ class pawn (piece):
             if  Board[self.position.file-1][self.position.rank-2].piece != 0:
                 return False
             return True
-        
     
+
     def move_piece (self, new_pos):
         if self.color == 'w':
             if self.check_capture(new_pos):
@@ -124,12 +124,12 @@ class pawn (piece):
                     self.move(Board[self.position.file-1][self.position.rank-2])
                     if self.position.rank == 1:
                         self.promote()
-            
-    def can_move(self):
-        for x in Board:
-            for y in x:
-                if self.check_pawn_move(y) or self.check_capture(y):
-                    return True
+
+def can_move(self):
+    for x in Board:
+        for y in x:
+            if self.check_pawn_move(y) or self.check_capture(y):
+                return True
         return False
     
     def promote(self):
@@ -163,12 +163,12 @@ class Knight (piece):
                 self.move(new_pos)
         else:
             print ("Error")
-            
-    def check_capture(self, new_pos):
-        if self.Check_Knight_Move(new_pos):
-            if new_pos.piece!= 0:
-                if new_pos.piece.color != self.color:
-                    return True
+
+def check_capture(self, new_pos):
+    if self.Check_Knight_Move(new_pos):
+        if new_pos.piece!= 0:
+            if new_pos.piece.color != self.color:
+                return True
         return False
     
     def can_move(self):
@@ -199,58 +199,58 @@ class Bishop (piece):
         if new_pos.piece != 0:
             if new_pos.piece.color == self.color:
                 return False
-            
+    
         if new_pos.piece != 0:
-                if new_pos.piece.color == self.color:
-                    return False
-        if dx > 0 and dy > 0:
-            for x ,y  in zip (range (1,dx),  range (1,dy)):
-                if Board[self.position.file+x-1][self.position.rank+y-1].piece != 0:
-                    
-                    return False
-            return True
-        if dx < 0 and dy > 0:
-            for x ,y  in zip (range (1,-dx),  range (1,dy)):
-                if Board[self.position.file - x-1][self.position.rank+y-1].piece != 0:
-                   
-                    return False
-            return True
-        if dx > 0 and dy < 0:
-            for x ,y  in zip (range (1,dx),  range (1,-dy)):
-                if Board[self.position.file+x-1][self.position.rank-y-1].piece != 0:
-                    
-                    return False
-            return True
-        if dx < 0 and dy < 0:
-            for x ,y  in zip (range (1,-dx),  range (1,-dy)):
-                if Board[self.position.file-x-1][self.position.rank-y-1].piece != 0:
-                    
-                    return False
-            return True
-        
-    def move_piece (self, new_pos):
-        if self.check_bishop_move(new_pos):
-            if new_pos.piece == 0:
-                self.move(new_pos)
+            if new_pos.piece.color == self.color:
+                return False
+                    if dx > 0 and dy > 0:
+                        for x ,y  in zip (range (1,dx),  range (1,dy)):
+                            if Board[self.position.file+x-1][self.position.rank+y-1].piece != 0:
+                                
+                                return False
+                                    return True
+                                        if dx < 0 and dy > 0:
+                                            for x ,y  in zip (range (1,-dx),  range (1,dy)):
+                                                if Board[self.position.file - x-1][self.position.rank+y-1].piece != 0:
+                                                    
+                                                    return False
+                                                        return True
+                                                            if dx > 0 and dy < 0:
+                                                                for x ,y  in zip (range (1,dx),  range (1,-dy)):
+                                                                    if Board[self.position.file+x-1][self.position.rank-y-1].piece != 0:
+                                                                        
+                                                                        return False
+                                                                            return True
+                                                                                if dx < 0 and dy < 0:
+                                                                                    for x ,y  in zip (range (1,-dx),  range (1,-dy)):
+                                                                                        if Board[self.position.file-x-1][self.position.rank-y-1].piece != 0:
+                                                                                            
+                                                                                            return False
+                                                                                                return True
+
+def move_piece (self, new_pos):
+    if self.check_bishop_move(new_pos):
+        if new_pos.piece == 0:
+            self.move(new_pos)
             else:
                 self.capture(new_pos)
-        else:
-            print ("Error")
-    
+    else:
+        print ("Error")
+
     def check_capture(self, new_pos):
         if self.check_bishop_move(new_pos):
             if new_pos.piece!= 0:
                 if new_pos.piece.color != self.color:
                     return True
         return False
-    
+
     def can_move(self):
         for x in Board:
             for y in x:
                 if self.check_bishop_move(y):
                     return True
         return False
-    
+
     def check_move(self, new_pos):
         if self.check_bishop_move(new_pos):
             return True
@@ -280,13 +280,13 @@ class Rook (piece):
         if dy > 0:
             for y in range (1,dy):
                 if Board[self.position.file-1][self.position.rank+y-1].piece != 0:
-                
+                    
                     return False
             return True
         if dx < 0:
             for x in range (1,-dx):
                 if Board[self.position.file-x-1][self.position.rank-1].piece != 0:
-                  
+                    
                     return False
             return True
         if dy < 0:
@@ -322,8 +322,8 @@ class Rook (piece):
         if self.check_rook_move(new_pos):
             return True
         return False
-    
-        
+
+
 class Queen (Rook, Bishop):
     w_name = '♕'
     b_name = '♛'
@@ -333,21 +333,21 @@ class Queen (Rook, Bishop):
             return True
         else:
             return False
-        
-    def move_piece (self, new_pos):
-        if self.check_queen_move(new_pos):
-            if new_pos.piece == 0:
-                self.move(new_pos)
+
+def move_piece (self, new_pos):
+    if self.check_queen_move(new_pos):
+        if new_pos.piece == 0:
+            self.move(new_pos)
             else:
                 self.capture(new_pos)
-        else:
-            print ("Error")
-            
-    def check_capture(self, new_pos):
-        if self.check_queen_move(new_pos):
-            if new_pos.piece!= 0:
-                if new_pos.piece.color != self.color:
-                    return True
+    else:
+        print ("Error")
+
+def check_capture(self, new_pos):
+    if self.check_queen_move(new_pos):
+        if new_pos.piece!= 0:
+            if new_pos.piece.color != self.color:
+                return True
         return False
     def can_move(self):
         for x in Board:
@@ -373,24 +373,24 @@ class King (Queen):
                 if y.piece != 0:
                     if y.piece.color != self.color:
                         if y.piece.name == "K":
-                                dx = new_pos.file - self.position.file
+                            dx = new_pos.file - self.position.file
                                 dy = new_pos.rank - self.position.rank
                                 if dx <= 1 and dy <= 1:
                                     if y.piece.check_queen_move(new_pos):
                                         new_pos.piece = z
                                         return False
-                        elif y.piece.name == "P":
-                            if y.piece.color == 'w':
-                                if new_pos.rank == y.piece.position.rank + 1 and abs(new_pos.file - y.piece.position.file) == 1:
-                                    new_pos.piece = z
+                    elif y.piece.name == "P":
+                        if y.piece.color == 'w':
+                            if new_pos.rank == y.piece.position.rank + 1 and abs(new_pos.file - y.piece.position.file) == 1:
+                                new_pos.piece = z
                                     return False
                             else:
                                 if new_pos.rank == y.piece.position.rank - 1 and abs(new_pos.file - y.piece.position.file) == 1:
                                     new_pos.piece = z
                                     return False
-                        else: 
-                            if y.piece.check_move(new_pos):
-                                new_pos.piece = z
+                    else:
+                        if y.piece.check_move(new_pos):
+                            new_pos.piece = z
                                 return False
         new_pos.piece = z
         return True
@@ -404,23 +404,24 @@ class King (Queen):
         
         if self.check_queen_move(new_pos) and self.check_legal(new_pos):
             return True
-        else: 
+        else:
             return False
-        
-    def move_piece(self,new_pos):
-        if self.check_king_move(new_pos):
-            if new_pos.piece == 0:
-                self.move(new_pos)
+
+def move_piece(self,new_pos):
+    if self.check_king_move(new_pos):
+        if new_pos.piece == 0:
+            self.move(new_pos)
             else:
                 self.capture(new_pos)
-        else:
-            print("Error")
-            
-    def check_capture(self, new_pos):
-        if self.check_king_move(new_pos):
-            if new_pos.piece!= 0:
-                if new_pos.piece.color != self.color:
-                    return True
+    else:
+        if self.check_k_castle():
+            self.k_castle()
+
+def check_capture(self, new_pos):
+    if self.check_king_move(new_pos):
+        if new_pos.piece!= 0:
+            if new_pos.piece.color != self.color:
+                return True
         return False
     
     def ischeck(self):
@@ -430,16 +431,33 @@ class King (Queen):
                     if y.piece.check_capture(self.position):
                         return True
         return False
-    
-    def can_move(self):
-        for x in Board:
-            for y in x:
-                if self.check_king_move(y):
+    def check_k_castle (self):
+        if self.color == 'w':
+            if self.check_queen_move(Board[6][0]) and self.check_legal(Board[6][0]) and self.check_legal(Board[5][0]) and (not self.ischeck()):
+                if (Board[0][7].piece.name == 'R' and Board[0][7].piece.color == self.color):
                     return True
+        else:
+            if self.check_queen_move(Board[6][7]) and self.check_legal(Board[6][7]) and self.check_legal(Board[5][7]) and (not self.ischeck()):
+                if (Board[7][7].piece.name == 'R' and Board[7][7].piece.color == self.color):
+                    return True
+        return False
+    def k_castle(self):
+        if self.color == 'w':
+            self.move(Board[6][0])
+            Board[7][0].piece.move(Board[5][0])
+        else:
+            self.move(Board[7][6])
+            Board[7][0].piece.move(Board[7][6])
+
+def can_move(self):
+    for x in Board:
+        for y in x:
+            if self.check_king_move(y):
+                return True
         return False
     
     def check_move(self, new_pos):
-        if self.check_king_move(new_pos):
+        if self.check_king_move(new_pos) or self.check_k_castle():
             return True
         return False
 
@@ -501,18 +519,18 @@ def playermove (color, bol):
     for x in possible_sq:
         print (str(c) + '. ' + str(x))
         c += 1
-        
+    
     num2 = int(input("\nWhere would you like to move it: "))
     
     possible_moves[num-1].piece.move_piece(possible_sq[num2-1])
 
 
 def main():
-
-    arrange() 
+    
+    arrange()
     bk = Board[4][7].piece
     wk = Board[4][0].piece
-
+    
     c = 1
     
     while (1):
@@ -541,5 +559,5 @@ def main():
             else:
                 print ("Game Over")
                 break
-        
+
 main()
